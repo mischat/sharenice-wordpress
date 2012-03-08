@@ -43,15 +43,14 @@ class ShareNice extends WP_Widget {
         $sharenice_colour= apply_filters('sharenice_colour', $instance['sharenice_colour']);
         $sharenice_size= apply_filters('sharenice_size', $instance['sharenice_size']);
         $sharenice_style= apply_filters('sharenice_style', $instance['sharenice_style']);
-//    data-services: Takes a comma separate list of domain's which you are interested in including in your shareNice lightbox.
-//    data-share-zindex: you can provide a z-index number here, if your website CSS uses z-index, you can add an optional z-index, see an example on jablonskis.org
         $sharenice_services= apply_filters('sharenice_services', $instance['sharenice_services']);
+        $sharenice_zindex= apply_filters('sharenice_zindex', $instance['sharenice_zindex']);
 
         ?>
             <?php echo $before_widget; ?>
                <?php if ( $title )
                    echo $before_title . $title . $after_title; ?>
-               <?php render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$sharenice_services,$instance); ?>
+               <?php render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$sharenice_services,$sharenice_zindex,$instance); ?>
             <?php echo $after_widget; ?>
         <?php
     }
@@ -65,6 +64,7 @@ class ShareNice extends WP_Widget {
 	$instance['sharenice_size'] = strip_tags($new_instance['sharenice_size']);
 	$instance['sharenice_style'] = strip_tags($new_instance['sharenice_style']);
 	$instance['sharenice_services'] = strip_tags($new_instance['sharenice_services']);
+	$instance['sharenice_zindex'] = strip_tags($new_instance['sharenice_zindex']);
 	return $instance;
     }
 
@@ -76,6 +76,7 @@ class ShareNice extends WP_Widget {
         $sharenice_size =esc_attr($instance['sharenice_size']);
         $sharenice_style =esc_attr($instance['sharenice_style']);
         $sharenice_services =esc_attr($instance['sharenice_services']);
+        $sharenice_zindex =esc_attr($instance['sharenice_zindex']);
 
         ?>
         <p>
@@ -117,6 +118,10 @@ class ShareNice extends WP_Widget {
               <option <?php if ($sharenice_style === "plain") { echo 'selected="selected"';} ?> value="plain">plain</option>
           </select>
         </p>
+        <p>
+          <label for="<?php echo $this->get_field_id('sharenice_zindex'); ?>"><?php _e('Z-Index:'); ?></label>
+          <input class="widefat" id="<?php echo $this->get_field_id('sharenice_zindex'); ?>" name="<?php echo $this->get_field_name('sharenice_zindex'); ?>" type="text" value="<?php echo $sharenice_zindex; ?>" />
+        </p>
         <?php
     }
 
@@ -126,7 +131,7 @@ class ShareNice extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("ShareNice");'));
 
 // main work function
-function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$sharenice_services,$instance) {
+function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$sharenice_services,$sharenice_zindex,$instance) {
 
     // just a bit of debugging code
     echo "<!-- Plugin Version: ".SHARENICE_VERSION." -->";
@@ -134,7 +139,7 @@ function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sh
     $plugin_dir = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
     echo '<script src="http://sharenice.org/code.js" type="text/javascript"></script>';
-    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'" data-icon-size="'.$sharenice_size.'" data-panel-bottom="'.$sharenice_style.'" data-services="'.$sharenice_services.'"></div>';
+    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'" data-icon-size="'.$sharenice_size.'" data-panel-bottom="'.$sharenice_style.'" data-services="'.$sharenice_services.'" data-share-zindex="'.$sharenice_zindex.'"></div>';
 }
 
 # vi:set expandtab sts=4 sw=4:
