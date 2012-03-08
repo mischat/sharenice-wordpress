@@ -119,7 +119,7 @@ add_action('widgets_init', create_function('', 'return register_widget("ShareNic
 function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$instance) {
 
     // just a bit of debugging code
-    echo "<!-- Plugin Version: ".SMM_VERSION." -->";
+    echo "<!-- Plugin Version: ".SHARENICE_VERSION." -->";
 
     $plugin_dir = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
