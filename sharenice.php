@@ -40,11 +40,12 @@ class ShareNice extends WP_Widget {
         extract( $args );
         $title = apply_filters('widget_title', $instance['title']);
         $sharenice_label= apply_filters('sharenice_label', $instance['sharenice_label']);
+        $sharenice_colour= apply_filters('sharenice_colour', $instance['sharenice_colour']);
         ?>
             <?php echo $before_widget; ?>
                <?php if ( $title )
                    echo $before_title . $title . $after_title; ?>
-               <?php render_sharenice($sharenice_label,$instance); ?>
+               <?php render_sharenice($sharenice_label,$sharenice_colour,$instance); ?>
             <?php echo $after_widget; ?>
         <?php
     }
@@ -54,6 +55,7 @@ class ShareNice extends WP_Widget {
 	$instance = $old_instance;
 	$instance['title'] = strip_tags($new_instance['title']);
 	$instance['sharenice_label'] = strip_tags($new_instance['sharenice_label']);
+	$instance['sharenice_colour'] = strip_tags($new_instance['sharenice_colour']);
 	return $instance;
     }
 
@@ -61,6 +63,7 @@ class ShareNice extends WP_Widget {
     function form($instance) {
         $title = esc_attr($instance['title']);
         $sharenice_label =esc_attr($instance['sharenice_label']);
+        $sharenice_colour =esc_attr($instance['sharenice_colour']);
 
         ?>
          <p>
@@ -68,9 +71,19 @@ class ShareNice extends WP_Widget {
           <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
         </p>
         <p>
-          <label for="<?php echo $this->get_field_id('sharenice_label'); ?>"><?php _e('sharenice label'); ?></label>
+          <label for="<?php echo $this->get_field_id('sharenice_label'); ?>"><?php _e('Share Label:'); ?></label>
           <input class="widefat" id="<?php echo $this->get_field_id('sharenice_label'); ?>" name="<?php echo $this->get_field_name('sharenice_label'); ?>" type="text" value="<?php echo $sharenice_label; ?>" />
-          <br><i>Enter a sharenice label</i>
+        </p>
+        <p>
+          <label for="<?php echo $this->get_field_id('sharenice_colour'); ?>"<?php _e('Color:'); ?></label>
+          <select class="widefat" id="<?php echo $this->get_field_id('sharenice_colour'); ?>" name="<?php echo $this->get_field_name('sharenice_colour'); ?>" >
+              <option <?php if ($sharenice_colour === "black") { echo 'selected="selected"';} ?> value="black">black</option>
+              <option <?php if ($sharenice_colour === "blue") { echo 'selected="selected"';} ?> value="blue">blue</option>
+              <option <?php if ($sharenice_colour === "green") { echo 'selected="selected"';} ?> value="green">green</option>
+              <option <?php if ($sharenice_colour === "orange") { echo 'selected="selected"';} ?> value="orange">orange</option>
+              <option <?php if ($sharenice_colour === "pink") { echo 'selected="selected"';} ?> value="pink">pink</option>
+              <option <?php if ($sharenice_colour === "red") { echo 'selected="selected"';} ?> value="red">red</option>
+          </select>
         </p>
         <?php
     }
@@ -81,7 +94,7 @@ class ShareNice extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("ShareNice");'));
 
 // main work function
-function render_sharenice($sharenice_label,$instance) {
+function render_sharenice($sharenice_label,$sharenice_colour,$instance) {
 
     // just a bit of debugging code
     echo "<!-- Plugin Version: ".SMM_VERSION." -->";
@@ -89,8 +102,7 @@ function render_sharenice($sharenice_label,$instance) {
     $plugin_dir = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
     echo '<script src="http://sharenice.org/code.js" type="text/javascript"></script>';
-    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'"></div>';
-
+    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'"></div>';
 }
 
 # vi:set expandtab sts=4 sw=4:
