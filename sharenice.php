@@ -4,11 +4,11 @@ Plugin Name: sharenice
 Plugin URI: http://wordpress.org/extend/plugins/sharenice/
 Description: Displays the <a href="http://sharenice.org/">sharenice</a> ethical social sharing widget
 Author: Mischa Tuffield
-Version: 0.1
+Version: 0.2
 Author URI: http://mmt.me.uk/blog/
 */
 
-define ("SHARENICE_VERSION","0.1");
+define ("SHARENICE_VERSION","0.2");
 
 /*  Copyright 2012 Mischa Tuffield (email : mmt@mmt.me.uk)
 
