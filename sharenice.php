@@ -41,15 +41,14 @@ class ShareNice extends WP_Widget {
         $title = apply_filters('widget_title', $instance['title']);
         $sharenice_label= apply_filters('sharenice_label', $instance['sharenice_label']);
         $sharenice_colour= apply_filters('sharenice_colour', $instance['sharenice_colour']);
-//data-icon-size: either "16" or "32", this defines the size of the shareNice icon.
-//data-panel-bottom: either "default" or "plain". Where: "plain" gives a non-branded lightbox.
         $sharenice_size= apply_filters('sharenice_size', $instance['sharenice_size']);
+        $sharenice_style= apply_filters('sharenice_style', $instance['sharenice_style']);
 
         ?>
             <?php echo $before_widget; ?>
                <?php if ( $title )
                    echo $before_title . $title . $after_title; ?>
-               <?php render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$instance); ?>
+               <?php render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$instance); ?>
             <?php echo $after_widget; ?>
         <?php
     }
@@ -61,6 +60,7 @@ class ShareNice extends WP_Widget {
 	$instance['sharenice_label'] = strip_tags($new_instance['sharenice_label']);
 	$instance['sharenice_colour'] = strip_tags($new_instance['sharenice_colour']);
 	$instance['sharenice_size'] = strip_tags($new_instance['sharenice_size']);
+	$instance['sharenice_style'] = strip_tags($new_instance['sharenice_style']);
 	return $instance;
     }
 
@@ -70,6 +70,7 @@ class ShareNice extends WP_Widget {
         $sharenice_label =esc_attr($instance['sharenice_label']);
         $sharenice_colour =esc_attr($instance['sharenice_colour']);
         $sharenice_size =esc_attr($instance['sharenice_size']);
+        $sharenice_style =esc_attr($instance['sharenice_style']);
 
         ?>
          <p>
@@ -98,6 +99,14 @@ class ShareNice extends WP_Widget {
               <option <?php if ($sharenice_size === "32") { echo 'selected="selected"';} ?> value="32">32</option>
           </select>
         </p>
+        </p>
+        <p>
+          <label for="<?php echo $this->get_field_id('sharenice_style'); ?>"<?php _e('Style:'); ?></label>
+          <select class="widefat" id="<?php echo $this->get_field_id('sharenice_style'); ?>" name="<?php echo $this->get_field_name('sharenice_style'); ?>" >
+              <option <?php if ($sharenice_style === "default") { echo 'selected="selected"';} ?> value="default">default</option>
+              <option <?php if ($sharenice_style === "plain") { echo 'selected="selected"';} ?> value="plain">plain</option>
+          </select>
+        </p>
         <?php
     }
 
@@ -107,7 +116,7 @@ class ShareNice extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("ShareNice");'));
 
 // main work function
-function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$instance) {
+function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sharenice_style,$instance) {
 
     // just a bit of debugging code
     echo "<!-- Plugin Version: ".SMM_VERSION." -->";
@@ -115,7 +124,7 @@ function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$in
     $plugin_dir = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
     echo '<script src="http://sharenice.org/code.js" type="text/javascript"></script>';
-    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'" data-icon-size="'.$sharenice_size.'"></div>';
+    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'" data-icon-size="'.$sharenice_size.'" data-panel-bottom="'.$sharenice_style.'"></div>';
 }
 
 # vi:set expandtab sts=4 sw=4:
