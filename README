@@ -1,0 +1,18 @@
+=== Plugin Name ===
+Contributors: mischa@mmt.me.uk
+Tags: sharenice, widget, sharing, social
+Requires at least: 3.3.1
+Tested up to: 3.3.1
+Stable tag: 0.1
+
+Adds a sharenice icon to a wordpess
+
+== Description ==
+
+This displays the sharenice.org ethical social sharing widget
+
+== Installation ==
+
+1. Upload the files (sharenice.php, README.TXT) to the `/wp-content/plugins/sharenice` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+
