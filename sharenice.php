@@ -143,7 +143,7 @@ function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sh
     if ($sharenice_services != "") {
         echo "data-services='$sharenice_services' ";
     }
-    if (preg_match("/^\d+$/", $sharenice_zindex) {
+    if (preg_match("/^\d+$/", $sharenice_zindex)) {
         echo "data-share-zindex='$sharenice_zindex' ";
     }
     echo "></div>";
