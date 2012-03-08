@@ -139,7 +139,14 @@ function render_sharenice($sharenice_label,$sharenice_colour,$sharenice_size,$sh
     $plugin_dir = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
     echo '<script src="http://sharenice.org/code.js" type="text/javascript"></script>';
-    echo '<div id="shareNice" data-share-label="'.$sharenice_label.'" data-color-scheme="'.$sharenice_colour.'" data-icon-size="'.$sharenice_size.'" data-panel-bottom="'.$sharenice_style.'" data-services="'.$sharenice_services.'" data-share-zindex="'.$sharenice_zindex.'"></div>';
+    echo "<div id='shareNice' data-share-label='$sharenice_label' data-color-scheme='$sharenice_colour' data-icon-size='$sharenice_size' data-panel-bottom='$sharenice_style' ";
+    if ($sharenice_services != "") {
+        echo "data-services='$sharenice_services' ";
+    }
+    if (preg_match("/^\d+$/", $sharenice_zindex) {
+        echo "data-share-zindex='$sharenice_zindex' ";
+    }
+    echo "></div>";
 }
 
 # vi:set expandtab sts=4 sw=4:
